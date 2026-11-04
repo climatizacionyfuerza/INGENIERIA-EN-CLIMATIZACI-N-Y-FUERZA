@@ -20,7 +20,7 @@
       --gray: #64748b;
       --gray-light: #f1f5f9;
       --white: #ffffff;
-      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       --radius: 14px;
       --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.06);
       --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.08);
@@ -73,11 +73,11 @@
       padding-right: clamp(1rem, 4vw, 2rem);
     }
 
-    /* Animaciones al aparecer en pantalla */
+    /* Efectos Reveal al hacer scroll */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: opacity, transform;
     }
 
@@ -86,12 +86,89 @@
       transform: translateY(0);
     }
 
+    /* Botón Hamburguesa Flotante (Móvil) */
+    .mobile-nav-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1100;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0;
+      transition: var(--transition);
+    }
+
+    .mobile-nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .mobile-nav-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-nav-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-nav-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Menú Móvil */
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 13, 24, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.75rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu-overlay a {
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+
+    .mobile-menu-overlay a:hover {
+      color: var(--accent);
+    }
+
     /* Hero */
     .hero {
       position: relative;
       background: radial-gradient(circle at 80% 20%, #102a43 0%, var(--dark) 70%);
       color: var(--white);
-      padding: clamp(4rem, 9vw, 7rem) 0;
+      padding: clamp(3.5rem, 8vw, 6.5rem) 0;
       text-align: center;
       display: flex;
       align-items: center;
@@ -113,10 +190,11 @@
       flex-direction: column;
       align-items: center;
       gap: 1.5rem;
+      width: 100%;
     }
 
     .brand-logo {
-      width: clamp(230px, 50vw, 390px);
+      width: clamp(230px, 48vw, 390px);
       filter: drop-shadow(0 10px 20px rgba(0, 180, 216, 0.25));
       margin-bottom: 0.5rem;
       border-radius: 8px;
@@ -164,7 +242,7 @@
       flex-wrap: wrap;
       gap: 1rem;
       justify-content: center;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
       width: 100%;
     }
 
@@ -222,22 +300,12 @@
     .section-header {
       text-align: center;
       max-width: 820px;
-      margin: 0 auto clamp(2.5rem, 5vw, 3.5rem) auto;
-    }
-
-    .section-tag {
-      color: var(--secondary);
-      font-weight: 700;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.5rem;
-      display: block;
+      margin: 0 auto clamp(2rem, 5vw, 3.5rem) auto;
     }
 
     .section-title {
       font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .section-subtitle {
@@ -245,7 +313,7 @@
       font-size: 1.05rem;
     }
 
-    /* Barra de Estadísticas */
+    /* Estadísticas */
     .stats-bar {
       background: var(--light);
       border-top: 1px solid #e2e8f0;
@@ -273,7 +341,7 @@
       font-size: 0.95rem;
     }
 
-    /* SECCIÓN DE SERVICIOS: NAVEGADOR DE PESTAÑAS (PÁGINAS INDEPENDIENTES) */
+    /* PESTAÑAS DE SERVICIOS */
     .services-interactive-wrapper {
       background: #ffffff;
       border-radius: var(--radius);
@@ -282,7 +350,6 @@
       overflow: hidden;
     }
 
-    /* Pestañas / Selector superior */
     .services-nav {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -294,14 +361,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.85rem;
-      padding: 1.4rem 1.5rem;
+      gap: 0.75rem;
+      padding: 1.3rem 1.25rem;
       background: transparent;
       border: none;
       border-bottom: 3px solid transparent;
       color: var(--gray);
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       transition: var(--transition);
@@ -309,10 +376,9 @@
     }
 
     .service-nav-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       flex-shrink: 0;
-      transition: var(--transition);
     }
 
     .service-nav-btn:hover {
@@ -326,18 +392,12 @@
       border-bottom-color: var(--secondary);
     }
 
-    .service-nav-btn.active svg {
-      color: var(--secondary);
-      transform: scale(1.1);
-    }
-
-    /* Paneles de vista completa */
     .service-view-panel {
       display: none;
-      padding: clamp(2rem, 5vw, 3.5rem);
+      padding: clamp(1.75rem, 5vw, 3.5rem);
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
     .service-view-panel.active {
@@ -348,11 +408,11 @@
 
     .panel-intro-header {
       max-width: 850px;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.25rem;
     }
 
     .panel-intro-header h3 {
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
       margin-bottom: 0.75rem;
       color: var(--primary);
     }
@@ -363,10 +423,10 @@
       line-height: 1.7;
     }
 
-    /* Tarjetas amplias para cada alcance */
+    /* GRID 2x2 */
     .specs-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       margin-bottom: 2.5rem;
     }
@@ -374,9 +434,11 @@
     .spec-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 1.6rem;
+      border-radius: 12px;
+      padding: 1.75rem;
       transition: var(--transition);
+      display: flex;
+      flex-direction: column;
     }
 
     .spec-card:hover {
@@ -387,7 +449,7 @@
     }
 
     .spec-card-badge {
-      display: inline-block;
+      align-self: flex-start;
       font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -400,37 +462,44 @@
     }
 
     .spec-card h4 {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       margin-bottom: 0.5rem;
       color: var(--primary);
     }
 
     .spec-card p {
-      font-size: 0.925rem;
+      font-size: 0.95rem;
       color: #64748b;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
-    /* Banner de acción dentro del servicio */
+    /* BARRA DE ACCIÓN: Botón siempre alineado a la derecha */
     .panel-action-bar {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
       padding: 1.5rem 2rem;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 10px;
+      border-radius: 12px;
     }
 
     .panel-action-bar p {
       font-weight: 600;
       color: var(--primary);
       margin: 0;
+      font-size: 1.05rem;
+      flex: 1;
     }
 
-    /* Metodología de Trabajo */
+    .panel-action-bar a {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* Metodología */
     .process-section {
       background: var(--light);
       border-top: 1px solid #e2e8f0;
@@ -494,6 +563,7 @@
       font-size: 0.875rem;
       cursor: pointer;
       transition: var(--transition);
+      text-align: center;
     }
 
     .filter-btn:hover,
@@ -502,6 +572,11 @@
       color: var(--white);
       border-color: var(--secondary);
       box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .gallery-carousel-wrapper {
+      position: relative;
+      width: 100%;
     }
 
     .gallery-grid {
@@ -562,17 +637,54 @@
       font-weight: 600;
     }
 
+    /* Flechas del carrusel en móvil */
+    .gallery-nav-arrow {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(10, 25, 47, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: var(--white);
+      z-index: 10;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: var(--transition);
+    }
+
+    .gallery-nav-arrow:hover {
+      background: var(--secondary);
+    }
+
+    .gallery-nav-arrow.prev {
+      left: 6px;
+    }
+
+    .gallery-nav-arrow.next {
+      right: 6px;
+    }
+
+    .gallery-nav-arrow svg {
+      width: 22px;
+      height: 22px;
+    }
+
     /* Modal Lightbox */
     .lightbox-modal {
       position: fixed;
       inset: 0;
-      background: rgba(7, 13, 24, 0.92);
+      background: rgba(7, 13, 24, 0.95);
       backdrop-filter: blur(8px);
-      z-index: 1000;
+      z-index: 1200;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1rem;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -585,6 +697,7 @@
     .lightbox-content {
       position: relative;
       max-width: 900px;
+      width: 100%;
       max-height: 85vh;
       display: flex;
       flex-direction: column;
@@ -592,7 +705,7 @@
     }
 
     .lightbox-content img {
-      max-height: 75vh;
+      max-height: 72vh;
       max-width: 100%;
       border-radius: 8px;
       object-fit: contain;
@@ -604,21 +717,57 @@
       margin-top: 1rem;
       font-size: 1rem;
       font-weight: 500;
+      text-align: center;
     }
 
     .lightbox-close {
       position: absolute;
-      top: -45px;
+      top: -48px;
       right: 0;
       background: transparent;
       border: none;
       color: var(--white);
-      font-size: 2rem;
+      font-size: 2.2rem;
       cursor: pointer;
       line-height: 1;
     }
 
-    /* Ventajas */
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 1210;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: var(--secondary);
+    }
+
+    .lightbox-nav-btn.prev {
+      left: 15px;
+    }
+
+    .lightbox-nav-btn.next {
+      right: 15px;
+    }
+
+    .lightbox-nav-btn svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* Garantía */
     .features-section {
       background: var(--white);
     }
@@ -662,7 +811,7 @@
       font-size: 0.925rem;
     }
 
-    /* CTA / Contacto */
+    /* CTA */
     .cta-section {
       background: radial-gradient(circle at center, #0f2744 0%, var(--dark) 100%);
       color: var(--white);
@@ -700,20 +849,159 @@
       text-align: center;
     }
 
-    /* Responsive */
+    /* AJUSTE MÓVIL: BOTONES EN HORIZONTAL VISIBLES SIMULTÁNEAMENTE */
     @media (max-width: 820px) {
+      .mobile-nav-toggle {
+        display: flex;
+      }
+
+      /* 1. Botones de Servicios */
       .services-nav {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.35rem;
+        background: #f1f5f9;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0.45rem;
+      }
+
+      .service-nav-btn {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0.65rem 0.25rem;
+        font-size: 0.72rem;
+        line-height: 1.25;
+        border-radius: 8px;
+        background: transparent;
+        border: 1px solid transparent;
+        gap: 0.35rem;
+        text-align: center;
+      }
+
+      .service-nav-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .service-nav-btn .full-text {
+        display: none;
+      }
+
+      .service-nav-btn .mobile-text {
+        display: block;
+      }
+
+      .service-nav-btn.active {
+        background: var(--secondary);
+        color: var(--white);
+        border-color: var(--secondary);
+      }
+
+      .service-nav-btn.active svg {
+        color: var(--white);
+      }
+
+      .specs-cards-grid {
         grid-template-columns: 1fr;
       }
-      .service-nav-btn {
-        border-bottom: 1px solid #e2e8f0;
-        border-left: 4px solid transparent;
-        text-align: left;
-        justify-content: flex-start;
+
+      .panel-action-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
       }
-      .service-nav-btn.active {
-        border-bottom-color: #e2e8f0;
-        border-left-color: var(--secondary);
+
+      .panel-action-bar a {
+        width: 100%;
+      }
+
+      /* 2. Botones de Filtro de Galería */
+      .gallery-filter {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr 1.2fr 1.3fr;
+        gap: 0.35rem;
+        padding: 0;
+        margin-bottom: 1.5rem;
+        width: 100%;
+      }
+
+      .filter-btn {
+        padding: 0.55rem 0.25rem;
+        font-size: 0.72rem;
+        line-height: 1.25;
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .filter-btn .full-label {
+        display: none;
+      }
+
+      .filter-btn .mobile-label {
+        display: inline;
+      }
+
+      /* 3. Carrusel con flechas */
+      .gallery-nav-arrow {
+        display: flex;
+      }
+
+      .gallery-grid {
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding: 0.5rem 0.25rem 1.25rem;
+        scrollbar-width: none;
+      }
+
+      .gallery-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .gallery-item {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        aspect-ratio: 4 / 3;
+      }
+
+      .gallery-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.3) 50%, transparent 100%);
+      }
+
+      .lightbox-nav-btn {
+        width: 42px;
+        height: 42px;
+      }
+
+      .lightbox-nav-btn.prev {
+        left: 5px;
+      }
+
+      .lightbox-nav-btn.next {
+        right: 5px;
+      }
+    }
+
+    /* Escritorio */
+    @media (min-width: 821px) {
+      .service-nav-btn .mobile-text {
+        display: none;
+      }
+      .service-nav-btn .full-text {
+        display: inline;
+      }
+      .filter-btn .mobile-label {
+        display: none;
+      }
+      .filter-btn .full-label {
+        display: inline;
       }
     }
 
@@ -723,11 +1011,6 @@
         min-width: 0;
         padding: 0.85rem 1.2rem;
       }
-      .panel-action-bar {
-        flex-direction: column;
-        text-align: center;
-      }
-      .gallery-grid,
       .process-grid,
       .features-grid {
         grid-template-columns: 1fr;
@@ -737,8 +1020,25 @@
 </head>
 <body>
 
+  <!-- Botón Hamburguesa Flotante (Móvil) -->
+  <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Abrir menú de navegación">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Menú Desplegable Móvil -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <a href="#inicio" class="mobile-menu-link">Inicio</a>
+    <a href="#servicios" class="mobile-menu-link">Servicios</a>
+    <a href="#proceso" class="mobile-menu-link">Metodología</a>
+    <a href="#galeria" class="mobile-menu-link">Galería de Trabajos</a>
+    <a href="#garantia" class="mobile-menu-link">Garantía de Excelencia</a>
+    <a href="#contacto" class="mobile-menu-link">Contacto</a>
+  </div>
+
   <!-- Hero Principal -->
-  <header class="hero">
+  <header class="hero" id="inicio">
     <div class="container hero-content">
       <img src="logo.jpeg" alt="Ingeniería en Climatización y Fuerza" class="brand-logo reveal">
       
@@ -753,9 +1053,9 @@
       </p>
 
       <div class="btn-group reveal">
-        <a href="#contacto" class="btn btn-primary">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+        <a href="https://wa.me/525612966592" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.842-.981z"/>
           </svg>
           Contacto
         </a>
@@ -781,7 +1081,7 @@
         <p>Cumplimiento de Normativas</p>
       </div>
       <div class="stat-item reveal">
-        <h3>7 Días</h3>
+        <h3>24/7</h3>
         <p>Atención Rápida y Emergencias</p>
       </div>
       <div class="stat-item reveal">
@@ -791,14 +1091,13 @@
     </div>
   </section>
 
-  <!-- SERVICIOS COMO PÁGINAS/VISTAS INDEPENDIENTES -->
+  <!-- Servicios (Vistas Independientes) -->
   <section id="servicios">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Servicios Especializados</span>
         <h2 class="section-title">Nuestras Líneas de Servicio</h2>
         <p class="section-subtitle">
-          Selecciona una especialidad para ver a detalle su cobertura técnica, alcance de ingeniería y alcances operativos con amplitud y sin saturación.
+          Selecciona una especialidad para ver a detalle su cobertura técnica, alcance de ingeniería y procedimientos operativos.
         </p>
       </div>
 
@@ -809,19 +1108,22 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.364-6.364l-1.414 1.414M7.05 16.95l-1.414 1.414M16.95 16.95l1.414 1.414M7.05 7.05L5.636 5.636M12 8a4 4 0 100 8 4 4 0 000-8z"/>
             </svg>
-            Aire Acondicionado y Refrigeración
+            <span class="full-text">Aire Acondicionado y Refrigeración</span>
+            <span class="mobile-text">Clima y Refrigeración</span>
           </button>
           <button class="service-nav-btn" data-tab="tab-extraccion" role="tab" aria-selected="false">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
             </svg>
-            Extracción y Ventilación
+            <span class="full-text">Extracción y Ventilación</span>
+            <span class="mobile-text">Extracción y Ventilación</span>
           </button>
           <button class="service-nav-btn" data-tab="tab-elevadores" role="tab" aria-selected="false">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"/>
             </svg>
-            Elevadores y Escaleras Eléctricas
+            <span class="full-text">Elevadores y Escaleras Eléctricas</span>
+            <span class="mobile-text">Elevadores y Escaleras</span>
           </button>
         </nav>
 
@@ -859,7 +1161,9 @@
 
           <div class="panel-action-bar">
             <p>¿Necesitas una cotización o memoria de cálculo para climatización o refrigeración?</p>
-            <a href="#contacto" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">Solicitar Asesoría</a>
+            <a href="https://wa.me/525612966592" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
+              Contacto
+            </a>
           </div>
         </div>
 
@@ -874,18 +1178,18 @@
 
           <div class="specs-cards-grid">
             <div class="spec-card">
-              <span class="spec-card-badge">Ingeniería Hidráulica</span>
+              <span class="spec-card-badge">Ingeniería</span>
               <h4>Cálculo y Selección de Equipo</h4>
               <p>Determinación volumétrica de CFM, caídas de presión estática (SP), curvas de rendimiento y renovaciones de aire por hora según la actividad del inmueble.</p>
             </div>
             <div class="spec-card">
               <span class="spec-card-badge">Catálogo</span>
-              <h4>Suministro de Extractores</h4>
+              <h4>Suministro</h4>
               <p>Equipos axiales, centrífugos, tubulares, extractores de tejado, inyectores de aire fresco y campanas industriales de extracción continua.</p>
             </div>
             <div class="spec-card">
               <span class="spec-card-badge">Mantenimiento</span>
-              <h4>Balanceo y Mantenimiento</h4>
+              <h4>Mantenimiento</h4>
               <p>Inspección de rodamientos, engrase, tensado de bandas motrices, alineación láser de poleas y limpieza de carcasas y hélices impulsoras.</p>
             </div>
             <div class="spec-card">
@@ -897,7 +1201,9 @@
 
           <div class="panel-action-bar">
             <p>¿Requieres calcular el sistema de extracción o ventilación para tu espacio?</p>
-            <a href="#contacto" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">Solicitar Asesoría</a>
+            <a href="https://wa.me/525612966592" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
+              Contacto
+            </a>
           </div>
         </div>
 
@@ -934,8 +1240,10 @@
           </div>
 
           <div class="panel-action-bar">
-            <p>¿Deseas asegurar el mantenimiento o modernización de tus elevadores y escaleras eléctricas?</p>
-            <a href="#contacto" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">Solicitar Asesoría</a>
+            <p>¿Deseas asegurar el mantenimiento o modernización de tus equipos?</p>
+            <a href="https://wa.me/525612966592" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">
+              Contacto
+            </a>
           </div>
         </div>
       </div>
@@ -943,10 +1251,9 @@
   </section>
 
   <!-- Metodología de Trabajo -->
-  <section class="process-section">
+  <section class="process-section" id="proceso">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Metodología</span>
         <h2 class="section-title">¿Cómo Trabajamos en Cada Proyecto?</h2>
         <p class="section-subtitle">
           Un proceso estructurado para brindar soluciones confiables, seguras y económicamente viables.
@@ -985,7 +1292,6 @@
   <section class="gallery-section" id="galeria">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Galería</span>
         <h2 class="section-title">Trabajos y Equipos en Operación</h2>
         <p class="section-subtitle">
           Evidencia de nuestras actividades en sitio: mantenimiento, suministros, maniobras e instalaciones.
@@ -994,110 +1300,135 @@
 
       <!-- Filtros por Servicios -->
       <div class="gallery-filter reveal">
-        <button class="filter-btn active" data-filter="all">Todos</button>
-        <button class="filter-btn" data-filter="aire-refrigeracion">Aire acondicionado y refrigeración</button>
-        <button class="filter-btn" data-filter="extraccion-ventilacion">Sistemas de extracción y ventilación</button>
-        <button class="filter-btn" data-filter="elevadores-escaleras">Elevadores y escaleras eléctricas</button>
+        <button class="filter-btn active" data-filter="all">
+          <span class="full-label">Todos</span>
+          <span class="mobile-label">Todos</span>
+        </button>
+        <button class="filter-btn" data-filter="aire-refrigeracion">
+          <span class="full-label">Aire acondicionado y refrigeración</span>
+          <span class="mobile-label">Clima y Refrigeración</span>
+        </button>
+        <button class="filter-btn" data-filter="extraccion-ventilacion">
+          <span class="full-label">Sistemas de extracción y ventilación</span>
+          <span class="mobile-label">Extracción y Ventilación</span>
+        </button>
+        <button class="filter-btn" data-filter="elevadores-escaleras">
+          <span class="full-label">Elevadores y escaleras eléctricas</span>
+          <span class="mobile-label">Elevadores y Escaleras</span>
+        </button>
       </div>
 
-      <!-- Cuadrícula de Imágenes -->
-      <div class="gallery-grid">
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Chillers y Redes de Enfriamiento">
-          <img src="imagen1.jpeg" alt="Chillers y tuberías industriales" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Sistemas centrales y cuartos de máquinas</span>
+      <!-- Carrusel con Flechas en móvil -->
+      <div class="gallery-carousel-wrapper">
+        <button class="gallery-nav-arrow prev" id="galleryPrevBtn" aria-label="Foto anterior">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <div class="gallery-grid" id="galleryGrid">
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Chillers y Redes de Enfriamiento">
+            <img src="imagen1.jpeg" alt="Chillers y tuberías industriales" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Sistemas centrales y cuartos de máquinas</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Diagnóstico de Ciclos y Gases">
+            <img src="imagen2.jpeg" alt="Recarga y medición de presiones" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Diagnóstico técnico y balanceo de refrigerante</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Maniobra de Izaje de Módulos">
+            <img src="imagen3.jpeg" alt="Maniobra e izaje exterior con grúa" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Elevadores y escaleras eléctricas</span>
+              <span class="gallery-caption">Izaje estructural y maniobras de altura</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Suministro y Traslado de Equipos">
+            <img src="imagen4.jpeg" alt="Logística y traslado de unidades" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Suministro y logística de unidades de climatización</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Instalación de Aire Acondicionado">
+            <img src="imagen5.jpeg" alt="Unidad interior tipo minisplit" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Instalación y acondicionamiento de espacios</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Montaje en Tiro de Elevador">
+            <img src="imagen6.jpeg" alt="Cubo de elevador exterior en estructura metálica" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Elevadores y escaleras eléctricas</span>
+              <span class="gallery-caption">Estructura y cerramiento para tiro de elevador</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="extraccion-ventilacion" data-title="Tableros de Control y Fuerza">
+            <img src="imagen7.jpeg" alt="Tablero eléctrico de control y bombeo" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Sistemas de extracción y ventilación</span>
+              <span class="gallery-caption">Control automático de inyección, extracción y bombeo</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Grúas para Maniobras de Elevación">
+            <img src="imagen8.jpeg" alt="Grúa industrial en sitio de trabajo" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Elevadores y escaleras eléctricas</span>
+              <span class="gallery-caption">Equipo pesado para montajes e izajes</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Posicionamiento Vertical de Cabinas">
+            <img src="imagen9.jpeg" alt="Grúa posicionando módulo vertical" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Elevadores y escaleras eléctricas</span>
+              <span class="gallery-caption">Instalación de estructuras y componentes de elevación</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Batería de Condensadoras">
+            <img src="imagen10.jpeg" alt="Batería de unidades condensadoras exteriores" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Distribución y mantenimiento de unidades condensadoras</span>
+            </div>
+          </div>
+
+          <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Unidades Exteriores de Refrigeración">
+            <img src="imagen11.jpeg" alt="Condensador exterior sobre soportes" loading="lazy">
+            <div class="gallery-overlay">
+              <span class="gallery-category">Aire acondicionado y refrigeración</span>
+              <span class="gallery-caption">Montaje técnico sobre base antivibratoria</span>
+            </div>
           </div>
         </div>
 
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Diagnóstico de Ciclos y Gases">
-          <img src="imagen2.jpeg" alt="Recarga y medición de presiones" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Diagnóstico técnico y balanceo de refrigerante</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Maniobra de Izaje de Módulos">
-          <img src="imagen3.jpeg" alt="Maniobra e izaje exterior con grúa" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Elevadores y escaleras eléctricas</span>
-            <span class="gallery-caption">Izaje estructural y maniobras de altura</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Suministro y Traslado de Equipos">
-          <img src="imagen4.jpeg" alt="Logística y traslado de unidades" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Suministro y logística de unidades de climatización</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Instalación de Aire Acondicionado">
-          <img src="imagen5.jpeg" alt="Unidad interior tipo minisplit" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Instalación y acondicionamiento de espacios</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Montaje en Tiro de Elevador">
-          <img src="imagen6.jpeg" alt="Cubo de elevador exterior en estructura metálica" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Elevadores y escaleras eléctricas</span>
-            <span class="gallery-caption">Estructura y cerramiento para tiro de elevador</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="extraccion-ventilacion" data-title="Tableros de Control y Fuerza">
-          <img src="imagen7.jpeg" alt="Tablero eléctrico de control y bombeo" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Sistemas de extracción y ventilación</span>
-            <span class="gallery-caption">Control automático de inyección, extracción y bombeo</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Grúas para Maniobras de Elevación">
-          <img src="imagen8.jpeg" alt="Grúa industrial en sitio de trabajo" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Elevadores y escaleras eléctricas</span>
-            <span class="gallery-caption">Equipo pesado para montajes e izajes</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="elevadores-escaleras" data-title="Posicionamiento Vertical de Cabinas">
-          <img src="imagen9.jpeg" alt="Grúa posicionando módulo vertical" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Elevadores y escaleras eléctricas</span>
-            <span class="gallery-caption">Instalación de estructuras y componentes de elevación</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Batería de Condensadoras">
-          <img src="imagen10.jpeg" alt="Batería de unidades condensadoras exteriores" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Distribución y mantenimiento de unidades condensadoras</span>
-          </div>
-        </div>
-
-        <div class="gallery-item reveal" data-category="aire-refrigeracion" data-title="Unidades Exteriores de Refrigeración">
-          <img src="imagen11.jpeg" alt="Condensador exterior sobre soportes" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-category">Aire acondicionado y refrigeración</span>
-            <span class="gallery-caption">Montaje técnico sobre base antivibratoria</span>
-          </div>
-        </div>
+        <button class="gallery-nav-arrow next" id="galleryNextBtn" aria-label="Siguiente foto">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- Filosofía y Garantía -->
-  <section class="features-section">
+  <!-- Garantía de Excelencia -->
+  <section class="features-section" id="garantia">
     <div class="container">
       <div class="section-header reveal">
-        <span class="section-tag">Ventajas</span>
         <h2 class="section-title">Garantía de Excelencia y Profesionalismo</h2>
         <p class="section-subtitle">
           Trabajamos con marcas líderes y tecnología de punta para entregar resultados de alto nivel técnico.
@@ -1113,7 +1444,7 @@
             Cumplimiento de Normativas
           </h4>
           <p>
-            Nos aseguramos de que todos los trabajos cumplan con las normativas de seguridad vigentes, brindando operatividad y tranquilidad legal para su inmueble[cite: 11, 22].
+            Nos aseguramos de que todos los trabajos cumplan con las normativas de seguridad vigentes, brindando operatividad y tranquilidad legal para su inmueble.
           </p>
         </div>
 
@@ -1125,7 +1456,7 @@
             Prevención como Prioridad
           </h4>
           <p>
-            El mantenimiento preventivo minimiza averías inesperadas, prolonga la vida útil de los equipos y reduce significativamente los costos operativos a largo plazo[cite: 8, 19].
+            El mantenimiento preventivo minimiza averías inesperadas, prolonga la vida útil de los equipos y reduce significativamente los costos operativos a largo plazo.
           </p>
         </div>
 
@@ -1137,7 +1468,7 @@
             Compromiso con el Orden y la Limpieza
           </h4>
           <p>
-            Trabajamos con el máximo orden y limpieza, dejando cada área en perfectas condiciones tras cada intervención, con total respeto por los espacios de nuestros clientes[cite: 6, 17].
+            Trabajamos con el máximo orden y limpieza, dejando cada área en perfectas condiciones tras cada intervención, con total respeto por los espacios de nuestros clientes.
           </p>
         </div>
 
@@ -1149,7 +1480,7 @@
             Disponibilidad y Respuesta Rápida
           </h4>
           <p>
-            Contamos con atención rápida para contingencias, con servicio disponible los 7 días de la semana con la prioridad de minimizar el tiempo de inactividad de sus sistemas[cite: 10, 21].
+            Contamos con atención rápida para contingencias, con servicio disponible los 7 días de la semana con la prioridad de minimizar el tiempo de inactividad de sus sistemas.
           </p>
         </div>
 
@@ -1162,7 +1493,7 @@
             Tecnología y Diagnóstico de Punta
           </h4>
           <p>
-            Herramientas e instrumentación moderna para diagnosticar y solucionar problemas con rapidez y precisión, adaptándonos a las innovaciones continuas del sector[cite: 9, 20].
+            Herramientas e instrumentación moderna para diagnosticar y solucionar problemas con rapidez y precisión, adaptándonos a las innovaciones continuas del sector.
           </p>
         </div>
 
@@ -1174,7 +1505,7 @@
             Relación Calidad-Precio Competitiva
           </h4>
           <p>
-            Precios accesibles sin comprometer la calidad del servicio, ofreciendo un mantenimiento rentable que genere valor a largo plazo para sus activos[cite: 12, 22].
+            Precios accesibles sin comprometer la calidad del servicio, ofreciendo un mantenimiento rentable que genere valor a largo plazo para sus activos.
           </p>
         </div>
       </div>
@@ -1209,11 +1540,21 @@
 
   <!-- Modal Lightbox -->
   <div class="lightbox-modal" id="lightbox">
+    <button class="lightbox-nav-btn prev" id="lightboxPrev" aria-label="Foto anterior">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
     <div class="lightbox-content">
       <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar vista">&times;</button>
       <img src="" alt="" id="lightboxImg">
       <div class="lightbox-title" id="lightboxTitle"></div>
     </div>
+    <button class="lightbox-nav-btn next" id="lightboxNext" aria-label="Siguiente foto">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
   </div>
 
   <!-- Pie de Página -->
@@ -1226,7 +1567,7 @@
   <!-- Scripts -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Efecto Scroll Reveal
+      // 1. Reveal
       const reveals = document.querySelectorAll('.reveal');
       const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -1237,12 +1578,50 @@
         });
       }, {
         root: null,
-        threshold: 0.1,
-        rootMargin: '0px 0px -30px 0px'
+        threshold: 0.08,
+        rootMargin: '0px 0px -20px 0px'
       });
       reveals.forEach(element => revealObserver.observe(element));
 
-      // 2. Control de Vistas / Pestañas de Servicios
+      // 2. Menú Móvil
+      const mobileNavToggle = document.getElementById('mobileNavToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+
+      const toggleMenu = () => {
+        const isOpen = mobileMenu.classList.contains('open');
+        if (isOpen) {
+          mobileMenu.classList.remove('open');
+          mobileNavToggle.classList.remove('open');
+          document.body.style.overflow = 'auto';
+        } else {
+          mobileMenu.classList.add('open');
+          mobileNavToggle.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        }
+      };
+
+      mobileNavToggle.addEventListener('click', toggleMenu);
+
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          toggleMenu();
+          
+          setTimeout(() => {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              targetElement.classList.add('active');
+              const innerReveals = targetElement.querySelectorAll('.reveal');
+              innerReveals.forEach(r => r.classList.add('active'));
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 300);
+        });
+      });
+
+      // 3. Pestañas de Servicios
       const serviceNavBtns = document.querySelectorAll('.service-nav-btn');
       const servicePanels = document.querySelectorAll('.service-view-panel');
 
@@ -1264,9 +1643,14 @@
         });
       });
 
-      // 3. Filtro de Galería
+      // 4. Filtro de Galería y Carrusel Móvil
       const filterBtns = document.querySelectorAll('.filter-btn');
-      const galleryItems = document.querySelectorAll('.gallery-item');
+      const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+      const galleryGrid = document.getElementById('galleryGrid');
+      const galleryPrevBtn = document.getElementById('galleryPrevBtn');
+      const galleryNextBtn = document.getElementById('galleryNextBtn');
+
+      let currentVisibleItems = [...galleryItems];
 
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1274,6 +1658,7 @@
           btn.classList.add('active');
 
           const category = btn.getAttribute('data-filter');
+          currentVisibleItems = [];
 
           galleryItems.forEach(item => {
             const itemCat = item.getAttribute('data-category');
@@ -1283,6 +1668,7 @@
                 item.style.opacity = '1';
                 item.style.transform = 'scale(1)';
               }, 40);
+              currentVisibleItems.push(item);
             } else {
               item.style.opacity = '0';
               item.style.transform = 'scale(0.95)';
@@ -1291,26 +1677,70 @@
               }, 250);
             }
           });
+          galleryGrid.scrollTo({ left: 0, behavior: 'smooth' });
         });
       });
 
-      // 4. Modal Lightbox
+      // Flechas carrusel móvil
+      galleryPrevBtn.addEventListener('click', () => {
+        galleryGrid.scrollBy({ left: -galleryGrid.clientWidth, behavior: 'smooth' });
+      });
+
+      galleryNextBtn.addEventListener('click', () => {
+        galleryGrid.scrollBy({ left: galleryGrid.clientWidth, behavior: 'smooth' });
+      });
+
+      // 5. Modal Lightbox
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightboxImg');
       const lightboxTitle = document.getElementById('lightboxTitle');
       const lightboxClose = document.getElementById('lightboxClose');
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+
+      let currentLightboxIndex = 0;
+
+      const updateLightboxContent = () => {
+        if (!currentVisibleItems.length) return;
+        const targetItem = currentVisibleItems[currentLightboxIndex];
+        const imgEl = targetItem.querySelector('img');
+        const title = targetItem.getAttribute('data-title') || imgEl.alt;
+
+        lightboxImg.src = imgEl.src;
+        lightboxImg.alt = imgEl.alt;
+        lightboxTitle.textContent = title;
+      };
 
       galleryItems.forEach(item => {
         item.addEventListener('click', () => {
-          const imgEl = item.querySelector('img');
-          const title = item.getAttribute('data-title') || imgEl.alt;
-          
-          lightboxImg.src = imgEl.src;
-          lightboxImg.alt = imgEl.alt;
-          lightboxTitle.textContent = title;
+          const indexInVisible = currentVisibleItems.indexOf(item);
+          currentLightboxIndex = indexInVisible !== -1 ? indexInVisible : 0;
+          updateLightboxContent();
           lightbox.classList.add('show');
           document.body.style.overflow = 'hidden';
         });
+      });
+
+      const showPrevImage = () => {
+        if (!currentVisibleItems.length) return;
+        currentLightboxIndex = (currentLightboxIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
+        updateLightboxContent();
+      };
+
+      const showNextImage = () => {
+        if (!currentVisibleItems.length) return;
+        currentLightboxIndex = (currentLightboxIndex + 1) % currentVisibleItems.length;
+        updateLightboxContent();
+      };
+
+      lightboxPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showPrevImage();
+      });
+
+      lightboxNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showNextImage();
       });
 
       const closeLightbox = () => {
@@ -1324,9 +1754,10 @@
       });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('show')) {
-          closeLightbox();
-        }
+        if (!lightbox.classList.contains('show')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrevImage();
+        if (e.key === 'ArrowRight') showNextImage();
       });
     });
   </script>
